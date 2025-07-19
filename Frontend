@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project Hub - Student Management System</title>
+</head>
+<body>
+    <h1>Student Registration</h1>
+    <form id="studentForm">
+        Student ID: <input type="text" id="student_id"><br>
+        Name: <input type="text" id="name"><br>
+        Project Title: <input type="text" id="project_title"><br>
+        Internship Company: <input type="text" id="internship_company"><br>
+        Role Access: <input type="text" id="role_access"><br>
+        <button type="submit">Add Student</button>
+    </form>
+
+    <script>
+        document.getElementById('studentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const student_id = document.getElementById('student_id').value;
+            const name = document.getElementById('name').value;
+            const project_title = document.getElementById('project_title').value;
+            const internship_company = document.getElementById('internship_company').value;
+            const role_access = document.getElementById('role_access').value;
+
+            const response = await fetch('/add_student', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({student_id, name, project_title, internship_company, role_access})
+            });
+            const result = await response.json();
+            alert(result.status);
+        });
+    </script>
+</body>
+</html>
