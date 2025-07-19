@@ -1,0 +1,7 @@
+CREATE TABLE students (
+    student_id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    project_title TEXT NOT NULL,
+    internship_company TEXT NOT NULL,
+    role_access TEXT NOT NULL
+);
