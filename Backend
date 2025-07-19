@@ -1,0 +1,33 @@
+from flask import Flask, request, jsonify
+import sqlite3
+
+app = Flask(__name__)
+
+@app.route('/add_student', methods=['POST'])
+def add_student():
+    data = request.json
+    student_id = data['student_id']
+    name = data['name']
+    project_title = data['project_title']
+    internship_company = data['internship_company']
+    role_access = data['role_access']
+
+    conn = sqlite3.connect('projecthub.db')
+    cur = conn.cursor()
+    cur.execute("INSERT INTO students (student_id, name, project_title, internship_company, role_access) VALUES (?, ?, ?, ?, ?)",
+                (student_id, name, project_title, internship_company, role_access))
+    conn.commit()
+    conn.close()
+    return jsonify({'status': 'Student Added Successfully'}), 200
+
+@app.route('/students', methods=['GET'])
+def get_students():
+    conn = sqlite3.connect('projecthub.db')
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM students")
+    students = cur.fetchall()
+    conn.close()
+    return jsonify({'students': students}), 200
+
+if __name__ == '__main__':
+    app.run(debug=True)
